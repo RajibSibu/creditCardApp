@@ -23,7 +23,7 @@ export class CreditcardPaymetComponent implements OnInit {
       cardHolderName: ['', [
         Validators.required
       ]],
-      expireDate: [ , [
+      expireDate: [, [
         Validators.required,
       ]],
       cvv: ['', [
@@ -38,14 +38,15 @@ export class CreditcardPaymetComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit(value) {
-    this.loading = true;
-    setTimeout((_: any) => {
-      this.loading = false;
-      this.router.navigate(['/mainPage']);
-      this.store.dispatch(new CreditCardPaymentDetails(value));
+    if (value && value.creditCardNum && value.cardHolderName && value.expireDate && value.amount) {
+      this.loading = true;
+      setTimeout((_: any) => {
+        this.loading = false;
+        this.router.navigate(['/mainPage']);
+        this.store.dispatch(new CreditCardPaymentDetails(value));
 
-    }, 2000);
-
+      }, 2000);
+    }
   }
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date());
